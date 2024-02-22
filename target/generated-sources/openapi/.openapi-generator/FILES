@@ -1,0 +1,9 @@
+README.md
+pom.xml
+src/main/java/com/ninjacart/agri/advisory/refdata/controllers/AgristackcropApi.java
+src/main/java/com/ninjacart/agri/advisory/refdata/controllers/ApiUtil.java
+src/main/java/com/ninjacart/agri/advisory/refdata/controllers/EppoCodesApi.java
+src/main/java/com/ninjacart/agri/advisory/refdata/controllers/UnspscCodesApi.java
+src/main/java/com/ninjacart/agri/advisory/refdata/models/AgriStackCrop.java
+src/main/java/com/ninjacart/agri/advisory/refdata/models/EppoCode.java
+src/main/java/com/ninjacart/agri/advisory/refdata/models/UnspscCode.java

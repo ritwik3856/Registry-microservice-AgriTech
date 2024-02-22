@@ -1,0 +1,25 @@
+spring:
+  cloud:
+    function:
+      definition: consumerBinding;producerBinding;processorBinding
+    stream:
+      bindings:
+        consumerBinding-in-0:
+          destination: consumer-topic
+          group: consumer-group
+        producerBinding-out-0:
+          destination: processor-topic
+        processorBinding-in-0:
+          destination: processor-topic
+        processorBinding-out-0:
+          destination: consumer-topic
+
+      kafka:
+        binder:
+          brokers: localhost:9092
+          producer:
+            key-serializer: org.apache.kafka.common.serialization.Serdes$StringSerde
+            value-serializer: com.ninjacart.agri.advisory.crop.config.EventSerDes
+          consumer:
+            key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+            value-deserializer: com.ninjacart.agri.advisory.crop.config.EventSerDes

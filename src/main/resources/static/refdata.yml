@@ -1,0 +1,649 @@
+openapi: 3.0.0
+info:
+  title: Refcodes API
+  description: API for managing Refcodes
+  version: 1.0.0
+
+tags:
+  - name: eppo-codes
+    description: CRUD operations for eppo-codes
+  - name: unspsc-codes
+    description: CRUD operations for unspsc-codes
+  - name: agristack_crop
+    description: CRUD operations for agristackcrop
+
+paths:
+  /api/v1/{toolID}/realm/{realmId}/user/{userId}/eppo-codes:
+    post:
+      tags:
+        - eppo-codes
+      summary: Add new eppo-codes
+      operationId: addEppoCode
+      parameters:
+        - name: realmId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: toolID
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EppoCode"
+      responses:
+        '200':
+          description: EppoCode Added
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EppoCode"
+
+    get:
+      tags:
+        - eppo-codes
+      summary: Get filtered eppo-codes
+      operationId: getFilterEppoCodes
+      parameters:
+        - name: realmId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: toolID
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: filter
+          in: query
+          description: RSQL filter expression
+          required: false
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: Page number
+          required: false
+          schema:
+            type: integer
+            default: 0
+        - name: size
+          in: query
+          description: Number of items per page
+          required: false
+          schema:
+            type: integer
+            default: 5
+        - name: sort
+          in: query
+          schema:
+            type: string
+            default: name,asc
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/EppoCode"
+
+  /api/v1/{toolID}/realm/{realmId}/user/{userId}/eppo-codes/{id}:
+    parameters:
+      - name: realmId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: toolID
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+
+    get:
+      tags:
+        - eppo-codes
+      summary: Get a specific eppo-code by ID
+      operationId: getEppoCodeById
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EppoCode"
+
+    put:
+      tags:
+        - eppo-codes
+      summary: Update a specific EppoCode by ID
+      operationId: updateEppoCode
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EppoCode"
+      responses:
+        '200':
+          description: Successful update
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EppoCode"
+
+    delete:
+      tags:
+        - eppo-codes
+      summary: Delete a specific eppo-code by ID
+      operationId: deleteEppoCodeById
+      responses:
+        '204':
+          description: Deleted Successfully
+
+  /api/v1/{toolID}/realm/{realmId}/user/{userId}/unspsc-codes:
+    post:
+      tags:
+        - unspsc-codes
+      summary: Add new unspsc-codes
+      operationId: addUnspscCode
+      parameters:
+        - name: realmId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: toolID
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UnspscCode"
+      responses:
+        '200':
+          description: UnspscCode Added
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnspscCode"
+
+    get:
+      tags:
+        - unspsc-codes
+      summary: Get filtered unspsc-codes
+      operationId: getFilterUnspscCodes
+      parameters:
+        - name: realmId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: toolID
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: filter
+          in: query
+          description: RSQL filter expression
+          required: false
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: Page number
+          required: false
+          schema:
+            type: integer
+            default: 0
+        - name: size
+          in: query
+          description: Number of items per page
+          required: false
+          schema:
+            type: integer
+            default: 5
+        - name: sort
+          in: query
+          schema:
+            type: string
+            default: name,asc
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UnspscCode"
+
+  /api/v1/{toolID}/realm/{realmId}/user/{userId}/unspsc-codes/{id}:
+    parameters:
+      - name: realmId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: toolID
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+
+    get:
+      tags:
+        - unspsc-codes
+      summary: Get a specific unspsc-code by ID
+      operationId: getUnspscCodeById
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnspscCode"
+
+    put:
+      tags:
+        - unspsc-codes
+      summary: Update a specific UnspscCode by ID
+      operationId: updateUnspscCode
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UnspscCode"
+      responses:
+        '200':
+          description: Successful update
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnspscCode"
+
+    delete:
+      tags:
+        - unspsc-codes
+      summary: Delete a specific unspsc-code by ID
+      operationId: deleteUnspscCodeById
+      responses:
+        '204':
+          description: Deleted Successfully
+  /api/v1/{toolID}/realm/{realmId}/user/{userId}/agristackcrop:
+    post:
+      tags:
+        - agristackcrop
+      summary: Add new agristackcrop
+      operationId: addAgriStackCrop
+      parameters:
+        - name: realmId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: toolID
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AgriStackCrop"
+      responses:
+        '200':
+          description: AgriStackCrop Added
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AgriStackCrop"
+
+    get:
+      tags:
+        - agristackcrop
+      summary: Get filtered agristackcrop
+      operationId: getFilterAgriStackCrop
+      parameters:
+        - name: realmId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: toolID
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: filter
+          in: query
+          description: RSQL filter expression
+          required: false
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: Page number
+          required: false
+          schema:
+            type: integer
+            default: 0
+        - name: size
+          in: query
+          description: Number of items per page
+          required: false
+          schema:
+            type: integer
+            default: 5
+        - name: sort
+          in: query
+          schema:
+            type: string
+            default: name,asc
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AgriStackCrop"
+
+  /api/v1/{toolID}/realm/{realmId}/user/{userId}/agristackcrop/{id}:
+    parameters:
+      - name: realmId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: toolID
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+
+    get:
+      tags:
+        - agristackcrop
+      summary: Get a specific agristackcrop by ID
+      operationId: getAgriStackCropById
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AgriStackCrop"
+
+    put:
+      tags:
+        - agristackcrop
+      summary: Update a specific AgriStackCrop by ID
+      operationId: updateAgriStackCrop
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AgriStackCrop"
+      responses:
+        '200':
+          description: Successful update
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AgriStackCrop"
+
+    delete:
+      tags:
+        - agristackcrop
+      summary: Delete a specific agristackcrop by cropcode
+      operationId: deleteAgriStackCropById
+      responses:
+        '204':
+          description: Deleted Successfully
+
+components:
+  schemas:
+    EppoCode:
+      type: object
+      x-class-extra-annotation: |
+        @jakarta.persistence.Entity
+        @jakarta.persistence.Table(
+            name = "eppo_codes"
+        )
+      properties:
+        id:
+          type: integer
+          format: int32
+          x-field-extra-annotation: |
+            @jakarta.persistence.Id
+            @jakarta.persistence.GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
+          description: Autogenerated primary key
+          x-id-attribute: true
+        realmId:
+          type: string
+        createdBy:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+        updatedBy:
+          type: integer
+        updatedAt:
+          type: string
+          format: date-time
+        createdByToolId:
+          type: string
+        updatedByToolId:
+          type: string
+        identifier:
+          type: string
+          maxLength: 10
+        datatype:
+          type: string
+          maxLength: 3
+        code:
+          type: string
+          maxLength: 8
+        language:
+          type: string
+          maxLength: 2
+        langNo:
+          type: string
+          maxLength: 2
+          x-property-name: lang_no
+        country:
+          type: string
+          maxLength: 2
+        fullName:
+          type: string
+          maxLength: 60
+        authority:
+          type: string
+          maxLength: 60
+        shortName:
+          type: string
+          maxLength: 30
+          x-property-name: short_name
+        is_deleted:
+          type: boolean
+          default: false
+
+    UnspscCode:
+      type: object
+      x-class-extra-annotation: |
+        @jakarta.persistence.Entity
+        @jakarta.persistence.Table(
+            name = "unspsc_codes"
+        )
+      properties:
+        id:
+          type: integer
+          x-field-extra-annotation: |
+            @jakarta.persistence.Id
+            @jakarta.persistence.GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
+          description: Autogenerated primary key
+          x-id-attribute: true
+        realmId:
+          type: string
+        createdBy:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+        updatedBy:
+          type: integer
+        updatedAt:
+          type: string
+          format: date-time
+        createdByToolId:
+          type: string
+        updatedByToolId:
+          type: string
+        segment:
+          type: integer
+        segmentName:
+          type: string
+        family:
+          type: integer
+        familyName:
+          type: string
+        classCode:
+          type: integer
+          x-property-name: class
+        className:
+          type: string
+        commodity:
+          type: integer
+        commodityName:
+          type: string
+        is_deleted:
+          type: boolean
+          default: false
+
+    AgriStackCrop:
+      type: object
+      x-class-extra-annotation: |
+        @jakarta.persistence.Entity
+        @jakarta.persistence.Table(
+            name = "agristack_crop"
+        )
+      properties:
+        id:
+          type: integer
+          x-field-extra-annotation: |
+            @jakarta.persistence.Id
+            @jakarta.persistence.GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
+          description: Autogenerated primary key
+          x-id-attribute: true
+        realmId:
+          type: string
+        createdBy:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+        updatedBy:
+          type: integer
+        updatedAt:
+          type: string
+          format: date-time
+        createdByToolId:
+          type: string
+        updatedByToolId:
+          type: string
+        Crop Registry Entity Identifier (Crop code):
+          type: integer
+        Crop name:
+          type: string
+        Crop Type:
+          type: string
+        Scientific name of crop:
+          type: string
+        Crop Category:
+          type: string
+        Hindi Name of Crop:
+          type: string
+        Vernacular name of crop in English by Assam:
+          type: string
+        is_deleted:
+          type: boolean
+          default: false

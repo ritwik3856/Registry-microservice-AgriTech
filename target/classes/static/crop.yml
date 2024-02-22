@@ -1,0 +1,669 @@
+openapi: 3.0.0
+info:
+  title: CropDetails API
+  description: API for managing crop and cropdetails
+  version: 1.0.0
+
+tags:
+  - name: crop
+    description: CRUD operations for crop
+  - name: crop_details
+    description: CRUD operations for crop_details
+
+paths:
+  /api/v1/{toolID}/realm/{realmId}/user/{userId}/crops:
+    post:
+      tags:
+        - crop
+      summary: Add a new crop
+      operationId: addCrop
+      parameters:
+        - name: realmId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: toolID
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Crop"
+      responses:
+        '200':
+          description: Crop Added
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Crop"
+
+    get:
+      tags:
+        - crop
+      summary: Get filtered crops
+      operationId: getFilterCrops
+      x-spring-paginated: true
+      parameters:
+        - name: realmId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: toolID
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: filter
+          in: query
+          description: RSQL filter expression
+          required: false
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: Page number
+          required: false
+          schema:
+            type: integer
+            default: 0
+        - name: size
+          in: query
+          description: Number of items per page
+          required: false
+          schema:
+            type: integer
+            default: 5
+        - name: sort
+          in: query
+          schema:
+            type: string
+            default: name,asc
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Crop"
+
+
+  /api/v1/{toolID}/realm/{realmId}/user/{userId}/crops/udiSearch:
+    parameters:
+      - name: realmId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: toolID
+        in: path
+        required: true
+        schema:
+          type: string
+
+    get:
+      tags:
+        - crop
+      summary: Retrieve UDI Search Results
+      operationId: findCropUdi
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MapOfCrop"
+
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              example:
+                error: Internal Server Error
+
+  /api/v1/{toolID}/realm/{realmId}/user/{userId}/crops/{id}:
+    parameters:
+      - name: realmId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: toolID
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+
+    get:
+      tags:
+        - crop
+      summary: Get a specific crop by ID
+      operationId: getCropById
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Crop"
+
+    put:
+      tags:
+        - crop
+      summary: Update a specific crop by ID
+      operationId: updateCropById
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Crop"
+      responses:
+        '200':
+          description: Successful update
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Crop"
+
+    delete:
+      tags:
+        - crop
+      summary: Delete a specific crop by ID
+      operationId: deleteCropById
+      responses:
+        '204':
+          description: Deleted Successfully
+
+  /api/v1/{toolID}/realm/{realmId}/user/{userId}/cropsdetails:
+    post:
+      tags:
+        - crop_details
+      summary: Add a new cropdetails
+      operationId: addCropDetails
+      parameters:
+        - name: realmId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: toolID
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CropDetails"
+      responses:
+        '200':
+          description: CropDetails Added
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CropDetails"
+
+    get:
+      tags:
+        - crop_details
+      summary: Get filtered cropdetails
+      operationId: getFilterCropsDetail
+      x-spring-paginated: true
+      parameters:
+        - name: realmId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: toolID
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: filter
+          in: query
+          description: RSQL filter expression
+          required: false
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: Page number
+          required: false
+          schema:
+            type: integer
+            default: 0
+        - name: size
+          in: query
+          description: Number of items per page
+          required: false
+          schema:
+            type: integer
+            default: 5
+        - name: sort
+          in: query
+          schema:
+            type: string
+            default: name,asc
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CropDetails"
+
+
+  /api/v1/{toolID}/realm/{realmId}/user/{userId}/cropdetails/udiSearch:
+    parameters:
+      - name: realmId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: toolID
+        in: path
+        required: true
+        schema:
+          type: string
+
+    get:
+      tags:
+        - crop_details
+      summary: Retrieve UDI Search Results
+      operationId: findCropDetailsUdi
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MapOfCropDetails"
+
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              example:
+                error: Internal Server Error
+
+  /api/v1/{toolID}/realm/{realmId}/user/{userId}/cropdetails/{id}:
+    parameters:
+      - name: realmId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: toolID
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+
+    get:
+      tags:
+        - crop_details
+      summary: Get a specific cropdetails by ID
+      operationId: getCropDetailsById
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CropDetails"
+
+    put:
+      tags:
+        - crop_details
+      summary: Update a specific cropdetails by ID
+      operationId: updateCropDetailsById
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CropDetails"
+      responses:
+        '200':
+          description: Successful update
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CropDetails"
+
+    delete:
+      tags:
+        - crop_details
+      summary: Delete a specific cropdetails by ID
+      operationId: deleteCropDetailsById
+      responses:
+        '204':
+          description: Deleted Successfully
+
+components:
+  schemas:
+    Crop:
+      type: object
+      x-class-extra-annotation: |-
+        @jakarta.persistence.Entity
+        @jakarta.persistence.Table(
+            name = "crop"
+          )
+      properties:
+        id:
+          type: integer
+          x-field-extra-annotation: |-
+            @jakarta.persistence.Id
+            @jakarta.persistence.GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
+          description: Autogenerated primary key
+          x-id-attribute: true
+        createdBy:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+        updatedBy:
+          type: integer
+        updatedAt:
+          type: string
+          format: date-time
+        createdByToolId:
+          type: string
+        updatedByToolId:
+          type: string
+        unspsc:
+          type: object
+          x-field-extra-annotation: |-
+            @jakarta.persistence.OneToOne(cascade = jakarta.persistence.CascadeType.ALL)
+            @jakarta.persistence.JoinColumn(name="unspsc")
+            @com.ninjacart.agri.advisory.crop.annotation.UDI
+          allOf:
+            - $ref: './refdata.yml/#/components/schemas/UnspscCode'
+        eppocode:
+          type: object
+          x-field-extra-annotation: |-
+            @jakarta.persistence.OneToOne(cascade = jakarta.persistence.CascadeType.ALL)
+            @jakarta.persistence.JoinColumn(name="eppocode")
+            @com.ninjacart.agri.advisory.crop.annotation.UDI
+          allOf:
+            - $ref: './refdata.yml/#/components/schemas/EppoCode'
+
+        name:
+          type: string
+        urlStr:
+          type: string
+        hindiName:
+          type: string
+        realmId:
+          type: string
+        alternateName:
+          type: string
+        description:
+          type: string
+        season:
+          type: integer
+          format: int64
+        sowingStartTime:
+          type: integer
+          format: int64
+        sowingEndTime:
+          type: integer
+          format: int64
+        reapingStartTime:
+          type: integer
+          format: int64
+        reapingEndTime:
+          type: integer
+          format: int64
+        diseases:
+          type: string
+        farmingRegions:
+          type: string
+        fertilizers:
+          type: string
+        income:
+          type: string
+        inputCost:
+          type: string
+        irrigationMethods:
+          type: string
+        machinesRequired:
+          type: string
+        marketDemand:
+          type: string
+        revenue:
+          type: string
+        seedProcurement:
+          type: string
+        seedQuantity:
+          type: string
+        seedTypes:
+          type: string
+        soilPreparation:
+          type: string
+        sowingMethod:
+          type: string
+        weedManagement:
+          type: string
+        nutritionalDetails:
+          type: string
+        cropImage:
+          type: string
+        cropIconImage:
+          type: string
+        cropTypeId:
+          type: integer
+        hashId:
+          type: string
+        sowingReapingTime:
+          type: string
+        segmentId:
+          type: integer
+        versionId:
+          type: integer
+        externalHashId:
+          type: string
+        is_deleted:
+          type: boolean
+          default: false
+
+      required:
+        - name
+        - income
+
+    MapOfCrop:
+      type: object
+      description: return map<string,object>
+      additionalProperties:
+        $ref: "#/components/schemas/Crop"
+
+    CropDetails:
+      type: object
+      x-class-extra-annotation: |-
+        @jakarta.persistence.Entity
+        @jakarta.persistence.Table(
+            name = "crop_details"
+          )
+      properties:
+        id:
+          type: integer
+          x-field-extra-annotation: |-
+            @jakarta.persistence.Id
+            @jakarta.persistence.GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
+          description: Autogenerated primary key
+          x-id-attribute: true
+        createdBy:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+        updatedBy:
+          type: integer
+        updatedAt:
+          type: string
+          format: date-time
+        createdByToolId:
+          type: string
+        updatedByToolId:
+          type: string
+        unspsc:
+          type: object
+          x-field-extra-annotation: |-
+            @jakarta.persistence.OneToOne(cascade = jakarta.persistence.CascadeType.ALL)
+            @jakarta.persistence.JoinColumn(name="unspsc")
+            @com.ninjacart.agri.advisory.crop.annotation.UDI
+          allOf:
+            - $ref: './refdata.yml/#/components/schemas/UnspscCode'
+        eppocode:
+          type: object
+          x-field-extra-annotation: |-
+            @jakarta.persistence.OneToOne(cascade = jakarta.persistence.CascadeType.ALL)
+            @jakarta.persistence.JoinColumn(name="eppocode")
+            @com.ninjacart.agri.advisory.crop.annotation.UDI
+          allOf:
+            - $ref: './refdata.yml/#/components/schemas/EppoCode'
+        realmId:
+          type: string
+        cropId:
+          type: integer
+        langId:
+          type: integer
+        authorId:
+          type: integer
+        time:
+          type: string
+          format: date-time
+        name:
+          type: string
+        description:
+          type: string
+        diseases:
+          type: string
+        farmingRegions:
+          type: string
+        fertilizers:
+          type: string
+        income:
+          type: string
+        inputCost:
+          type: string
+        irrigationMethods:
+          type: string
+        machinesRequired:
+          type: string
+        marketDemand:
+          type: string
+        revenue:
+          type: string
+        seedProcurement:
+          type: string
+        seedQuantity:
+          type: string
+        seedTypes:
+          type: string
+        soilPreparation:
+          type: string
+        sowingMethod:
+          type: string
+        weedManagement:
+          type: string
+        nutritionalDetails:
+          type: string
+        published:
+          type: boolean
+        versionId:
+          type: integer
+        parent_id:
+          type: integer
+        isApproved:
+          type: integer
+          format: int64
+        reviewerRemarks:
+          type: string
+        lastUpdatedAt:
+          type: string
+          format: date-time
+        approvedAt:
+          type: string
+          format: date-time
+        approvedBy:
+          type: integer
+
+      required:
+        - name
+        - income
+
+    MapOfCropDetails:
+      type: object
+      description: return map<string,object>
+      additionalProperties:
+        $ref: "#/components/schemas/CropDetails"
+
+
